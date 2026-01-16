@@ -8,7 +8,7 @@
 	yc init
 	
 	yc config list
-					Ïðèìåð! 
+					Example: 
 					mitin@vm:~$ yc config list
 												
 					token: y0__xC*******JEBs6Gb4OTDA
