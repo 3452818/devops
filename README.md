@@ -54,8 +54,9 @@ ssh-keygen -t rsa -b 4096 -f ~/.ssh/id_rsa -N ""
 ubuntu@fhm7lfo5lj1o4t2h6nco: sudo sudo apt install ansible
 
  # Apply  ansible playbook
-cd ../ansible
+
 ansible-playbook -i inventory.ini playbook.yml
+
 ubuntu@fhm7lfo5lj1o4t2h6nco:~$ cd devops/ansible/
 ubuntu@fhm7lfo5lj1o4t2h6nco:~/devops/ansible$ ansible-playbook -i inventory.ini playbook.yml
 
