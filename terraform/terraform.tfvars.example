@@ -1,0 +1,5 @@
+yandex_cloud_id  = "your-cloud-id-here"
+yandex_folder_id = "your-folder-id-here"
+yandex_oauth_token = "your-oauth-token-here"
+ssh_public_key   = "ssh-rsa AAAAB3NzaC1yc2E... user@local"
+instance_name_prefix = "k8s-project"

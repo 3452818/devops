@@ -1,0 +1,4 @@
+# Общие переменные
+ansible_user: ubuntu
+ssh_keys_dir: /home/{{ ansible_user }}/.ssh
+authorized_keys_file: "{{ ssh_keys_dir }}/authorized_keys"

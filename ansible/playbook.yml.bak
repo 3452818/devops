@@ -1,0 +1,168 @@
+---
+- name: Настроить все серверы
+  hosts: all
+  become: yes
+  tasks:
+    - name: Обновить пакеты
+      apt:
+        update_cache: yes
+        upgrade: dist
+
+    - name: Установить необходимые пакеты
+      apt:
+        name:
+          - curl
+          - wget
+          - git
+          - vim
+          - net-tools
+          - software-properties-common
+          - ca-certificates
+          - apt-transport-https
+        state: present
+
+    - name: Добавить SSH-ключ в authorized_keys
+      authorized_key:
+        user: "{{ ansible_user }}"
+        state: present
+        key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
+
+- name: Настроить мастер-узел Kubernetes
+  hosts: k8s-master
+  become: yes
+  vars:
+    - k8s_cni: calico
+  tasks:
+    - name: Установить containerd
+      apt:
+        name: containerd
+        state: present
+
+
+
+    - name: Перезапустить containerd
+      systemd:
+        name: containerd
+        state: restarted
+
+
+
+    - name: Установить kubeadm, kubelet, kubectl
+      apt:
+        name:
+          - kubelet
+          - kubeadm
+          - kubectl
+        state: present
+
+
+
+
+
+    - name: Создать директорию .kube
+      file:
+        path: /home/ubuntu/.kube
+        state: directory
+        owner: ubuntu
+        group: ubuntu
+        mode: '0755'
+
+
+- name: Настроить рабочий узел Kubernetes
+  hosts: k8s-app
+  become: yes
+  tasks:
+    - name: Установить containerd
+      apt:
+        name: containerd
+        state: present
+
+ 
+
+    - name: Перезапустить containerd
+      systemd:
+        name: containerd
+        state: restarted
+
+
+
+    - name: Установить kubeadm, kubelet, kubectl
+      apt:
+        name:
+          - kubelet
+          - kubeadm
+          - kubectl
+        state: present
+
+  
+
+
+- name: Настроить служебный сервер srv
+  hosts: srv
+  become: yes
+  tasks:
+    - name: Установить Docker
+      apt:
+        name:
+          - docker.io
+          - docker-compose
+        state: present
+
+    - name: Добавить пользователя ubuntu в группу docker
+      user:
+        name: ubuntu
+        groups: docker
+        append: yes
+
+    - name: Запустить и включить Docker
+      systemd:
+        name: docker
+        state: started
+        enabled: yes
+
+    - name: Установить Docker Compose
+      get_url:
+        url: https://github.com/docker/compose/releases/download/{{ docker_compose_version }}/docker-compose-linux-x86_64
+        dest: /usr/local/bin/docker-compose
+        mode: '0755'
+
+    - name: Установить GitLab Runner
+      apt:
+        name: gitlab-runner
+        state: present
+
+    - name: Запустить GitLab Runner
+      systemd:
+        name: gitlab-runner
+        state: started
+        enabled: yes
+
+    - name: Установить Prometheus (через docker-compose)
+      copy:
+        content: |
+          version: '3.8'
+          services:
+            prometheus:
+              image: prom/prometheus:v2.51.1
+              ports:
+                - "{{ prometheus_port }}:9090"
+              volumes:
+                - ./prometheus.yml:/etc/prometheus/prometheus.yml
+            grafana:
+              image: grafana/grafana:10.2.2
+              ports:
+                - "{{ grafana_port }}:3000"
+              environment:
+                - GF_SECURITY_ADMIN_USER=admin
+                - GF_SECURITY_ADMIN_PASSWORD=secret
+        dest: /opt/monitoring/docker-compose.yml
+
+    - name: Создать директорию для мониторинга
+      file:
+        path: /opt/monitoring
+        state: directory
+
+    - name: Запустить мониторинг
+      command: docker-compose up -d
+      args:
+        chdir: /opt/monitoring

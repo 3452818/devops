@@ -1,0 +1,4 @@
+# Мастер-узел Kubernetes
+k8s_role: master
+k8s_version: "1.30"
+containerd_version: "1.7.17"

@@ -1,0 +1,4 @@
+# Рабочий узел Kubernetes
+k8s_role: worker
+k8s_version: "1.30.0"
+containerd_version: "1.7.17"

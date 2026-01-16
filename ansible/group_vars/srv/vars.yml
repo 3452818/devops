@@ -1,0 +1,6 @@
+# Служебный сервер
+srv_role: tools
+docker_compose_version: "v2.29.2"
+gitlab_runner_version: "16.10.0"
+prometheus_port: 9090
+grafana_port: 3000

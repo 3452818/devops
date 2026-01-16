@@ -1,0 +1,7 @@
+yandex_oauth_token    = "y0__xCbsICHAxjB3RMg_czX5RUwvpKi2QdC493btOQWh_I9i2JEBs6Gb4OTDA"
+yandex_cloud_id    = "b1go8ejc3j3vfunceoda"
+yandex_folder_id   = "b1gljtsoueqq0mq86dmi"
+zone        = "ru-central1-a"
+#image_id    = "fd8gk6f87bbfmuctfl6t"
+#instance_name_prefix = "k8s-project"
+ssh_public_key   = "ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEAg+gRwvfZ4y50/C9hG0Yt3fVPh/4DQkW0tGkGAoMsdOA19Z8Ppw1oLjlZ5EG6CsEEeX7waynyPFu5VR6YOFza5F4D2Fp1YEnBJITWZznUNVjEvLxlnaej0ilREbgi9q64p9PSrYnvt6zGrSwjE/A3UMRMNyuMrLxJ3EivxJquf1W5Rasuwao0qBmwjohuUQ3Tqra/aBgc2REPmUwW2tPCH/57GD/iEtRTcODGZ3oqXf6TrmJB7kwl2ioUDYE6zwZ1PXlCZnKGnFeVbGF7U7m8Dudu2fE7A6dhIixP+mpsnC7s2hQJn+viuv/ZvEkPaVdcpvIWIoVlZi9JKyYCx/rjnQ== "
