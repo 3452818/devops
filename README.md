@@ -58,7 +58,10 @@ ubuntu@fhm7lfo5lj1o4t2h6nco: sudo sudo apt install ansible
 ansible-playbook -i inventory.ini playbook.yml
 
 ubuntu@fhm7lfo5lj1o4t2h6nco:~$ cd devops/ansible/
-ubuntu@fhm7lfo5lj1o4t2h6nco:~/devops/ansible$ ansible-playbook -i inventory.ini playbook.yml
+
+ubuntu@fhm7lfo5lj1o4t2h6nco:~/devops/ansible
+
+ansible-playbook -i inventory.ini playbook.yml
 
 ansible-playbook kube_dependencies.yml -i inventory.ini
 
